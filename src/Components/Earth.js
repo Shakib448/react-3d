@@ -4,7 +4,8 @@ const Earth = ({}) => {
   return (
     <>
       <mesh>
-        <sphereGeometry />
+        <sphereBufferGeometry args={[1, 32, 32]} />
+        <meshStandardMaterial color="red" />
       </mesh>
     </>
   );
