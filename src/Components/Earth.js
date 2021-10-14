@@ -8,15 +8,18 @@ import EarthSpecularMap from "../assets/textures/8k_earth_specular_map.jpg";
 import EarthCloudMap from "../assets/textures/8k_earth_clouds.jpg";
 
 const Earth = () => {
-  const [colorMap, normalMap, specularMap, cloudsMap] =
-    useLoader(TextureLoader,  [EarthDayMap, EarthNormalMap,EarthSpecularMap,EarthCloudMap]);
+  const [colorMap, normalMap, specularMap, cloudsMap] = useLoader(
+    TextureLoader,
+    [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudMap]
+  );
 
   return (
     <>
       <ambientLight intensity={1} />
       <mesh>
-        <sphereBufferGeometry args={[1, 32, 32]} />
-        <meshStandardMaterial color="red" />
+        <sphereGeometry args={[1, 32, 32]} />
+        <meshPhongMaterial specularMap={specularMap} />
+        <meshStandardMaterial map={colorMap} normalMap={normalMap} />
       </mesh>
     </>
   );
