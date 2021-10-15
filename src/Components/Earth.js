@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { OrbitControls, Stars } from "@react-three/drei";
+import { Stars } from "@react-three/drei";
 import { TextureLoader } from "three";
 import * as THREE from "three";
 
@@ -34,8 +34,8 @@ const Earth = () => {
         saturation={0}
         fade
       />
-      <pointLight color="#f6f3ea" position={[2, 0, 2]} intensity={1.2} />
-      <mesh ref={cloudsRef}>
+      <pointLight color="#f6f3ea" position={[2, 0, 5]} intensity={1.2} />
+      <mesh ref={cloudsRef} position={[0, 0, 2.5]}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshPhongMaterial
           map={cloudsMap}
@@ -45,7 +45,7 @@ const Earth = () => {
           side={THREE.DoubleSide}
         />
       </mesh>
-      <mesh ref={earthRef}>
+      <mesh ref={earthRef} position={[0, 0, 2.5]}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshPhongMaterial specularMap={specularMap} />
         <meshStandardMaterial
@@ -54,14 +54,14 @@ const Earth = () => {
           metalness={0.4}
           roughness={0.7}
         />
-        <OrbitControls
+        {/* <OrbitControls
           enableZoom
           enablePan
           enableRotate
           zoomSpeed={0.6}
           panSpeed={0.5}
           rotateSpeed={0.4}
-        />
+        /> */}
       </mesh>
     </>
   );
