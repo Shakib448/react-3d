@@ -1,5 +1,5 @@
-import React from "react";
-import { useLoader } from "@react-three/fiber";
+import React, { useRef } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
 import { TextureLoader } from "three";
 import * as THREE from "three";
@@ -15,9 +15,17 @@ const Earth = () => {
     [EarthDayMap, EarthNormalMap, EarthSpecularMap, EarthCloudMap]
   );
 
+  const earthRef = useRef();
+  const cloudsRef = useRef();
+
+  useFrame(({ clock }) => {
+    const elapsedTime = clock.getElapsedTime();
+    earthRef.current.rotation.y = elapsedTime / 6;
+    cloudsRef.current.rotation.y = elapsedTime / 6;
+  });
+
   return (
     <>
-      <ambientLight intensity={1} />
       <Stars
         radius={300}
         depth={60}
@@ -26,8 +34,8 @@ const Earth = () => {
         saturation={0}
         fade
       />
-      <pointLight color="#FFFF8A" position={[2, 0, 2]} intensity={1.2} />
-      <mesh>
+      <pointLight color="#f6f3ea" position={[2, 0, 2]} intensity={1.2} />
+      <mesh ref={cloudsRef}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshPhongMaterial
           map={cloudsMap}
@@ -37,10 +45,15 @@ const Earth = () => {
           side={THREE.DoubleSide}
         />
       </mesh>
-      <mesh>
+      <mesh ref={earthRef}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshPhongMaterial specularMap={specularMap} />
-        <meshStandardMaterial map={colorMap} normalMap={normalMap} />
+        <meshStandardMaterial
+          map={colorMap}
+          normalMap={normalMap}
+          metalness={0.4}
+          roughness={0.7}
+        />
         <OrbitControls
           enableZoom
           enablePan
