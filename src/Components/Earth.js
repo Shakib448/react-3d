@@ -1,6 +1,6 @@
 import React from "react";
 import { useLoader } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Stars } from "@react-three/drei";
 import { TextureLoader } from "three";
 import * as THREE from "three";
 
@@ -18,6 +18,15 @@ const Earth = () => {
   return (
     <>
       <ambientLight intensity={1} />
+      <Stars
+        radius={300}
+        depth={60}
+        count={20000}
+        factor={7}
+        saturation={0}
+        fade
+      />
+      <pointLight color="#FFFF8A" position={[2, 0, 2]} intensity={1.2} />
       <mesh>
         <sphereGeometry args={[1, 32, 32]} />
         <meshPhongMaterial
